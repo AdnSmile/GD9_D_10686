@@ -3,13 +3,14 @@ package com.example.gd8_proximity_d_10686
 import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var sensorManager : SensorManager
     private lateinit var square : TextView
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        setUpSensorStuff()
 
     }
 
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(
             AppCompatDelegate.MODE_NIGHT_NO)
         square = findViewById(R.id.tv_square)
-        setUpSensorStuff()
+//        setUpSensorStuff()
 
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-     fun onSensorChanged(event: SensorEvent?) {
+     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
             val sides = event.values[0]
             val upDown = event.values[1]
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-     fun onAccuracyChanged(sensor:Sensor?, accuracy:Int){
+     override fun onAccuracyChanged(sensor:Sensor?, accuracy:Int){
         return
     }
 
